@@ -1,2 +1,2 @@
 # Python-Tasks
-Some tasks on Python
+Some tasks on Python.
