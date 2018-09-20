@@ -1,15 +1,17 @@
-#Немушкин Юрий ИУ7-14Б
+from math import sqrt
 
-import math
+edge = float(input("Input icosahedron edge length: "))
 
-edge = int(input("Input icosahedron edge's length: "))
+if edge <= 0:
+    print('Uncorrect length')
+else:
+    volume = 5 * (edge ** 3) * (3 + sqrt(5)) / 12
+    surfaceArea = 5 * (edge ** 3) * sqrt(3)
+    radiusInscribedSphere = edge * sqrt(3) * (3 + sqrt(5)) / 12
+    radiusDescribedSphere = edge * sqrt(2 * (5 + sqrt(5))) / 4
 
-volume = (5 * (edge ** 3) * (3 + math.sqrt(5))) / (12)
-surfaceArea = 5 * (edge ** 3) * math.sqrt(3)
-radiusInscribedSphere = (edge * math.sqrt(3) * (3 + math.sqrt(5))) / (12)
-radiusDescribedSphere = (edge * math.sqrt(2 * (5 + math.sqrt(5)))) / (4)
-
-print('Volume of icosahedron: {:.2f}'.format(volume))
-print('Surface area of icosahedron: {:.2f}'.format(surfaceArea))
-print('Radius inscribed sphere of icosahedron: {:.2f}'.format(volume))
-print('Radius described sphere of icosahedron: {:.2f}'.format(volume))
+    print('\n')
+    print('Volume of icosahedron: {:.5g}'.format(volume))
+    print('Surface area of icosahedron: {:.5g}'.format(surfaceArea))
+    print('Radius inscribed sphere of icosahedron: {:.5g}'.format(radiusInscribedSphere))
+    print('Radius described sphere of icosahedron: {:.5g}'.format(radiusDescribedSphere))
