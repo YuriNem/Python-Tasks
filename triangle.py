@@ -68,7 +68,7 @@ class Triangle():
             sideTheBigget = getTheBiggestSide(self.sideFirst, self.sideSecond, self.sideThird)
             return sideTheBigget
         else:
-            return FALSE
+            return self.isPointInside(point)
 
     def isIsosceles(self):
         sideFirstLength = self.sideFirst.getLength()
