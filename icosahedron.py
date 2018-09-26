@@ -1,6 +1,6 @@
 from math import sqrt
 
-edge = float(input("Input icosahedron edge length: "))
+edge = float(input('Input icosahedron edge length: '))
 
 if edge <= 0:
     print('Uncorrect length')
