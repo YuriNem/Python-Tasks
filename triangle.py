@@ -1,54 +1,58 @@
-#Немушкин Юрий ИУ7-14Б
+# Немушкин Юрий ИУ7-14Б
 
 from math import sqrt, fabs
 
-x1, y1 = map(float, input('Input x and y for first point: ').split())
-x2, y2 = map(float, input('Input x and y for second point: ').split())
-x3, y3 = map(float, input('Input x and y for third point: ').split())
+x1, y1 = map(float, input('Input x and y for point A: ').split())
+x2, y2 = map(float, input('Input x and y for point B: ').split())
+x3, y3 = map(float, input('Input x and y for point C: ').split())
+print('\n')
+
 if (x1 - x3) * (y2 - y3) - (x2 - x3) * (y1 - y3) == 0:
-    print('Uncorrect coordinats')
+    print('Uncorrect coordinates')
+    raise SystemExit
 else:
-    print('')
+    print('Correct coordinates')
 print('\n')
 
-sideFirstLength = sqrt((pointSecondX - pointFirstX) ** 2 + (pointSecondY - pointFirstY) ** 2)
-print('Length of first side: {:.5g}'.format(sideFirstLength))
-sideSecondLength = sqrt((pointThirdX - pointSecondX) ** 2 + (pointThirdY - pointSecondY) ** 2)
-print('Length of second side: {:.5g}'.format(sideSecondLength))
-sideThirdLength = sqrt((pointFirstX - pointThirdX) ** 2 + (pointFirstY - pointThirdY) ** 2)
-print('Length of third side: {:.5g}'.format(sideThirdLength))
+ab = sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+print('Length of AB: {:.5g}'.format(ab))
+bc = sqrt((x3 - x2) ** 2 + (y3 - y2) ** 2)
+print('Length of BC: {:.5g}'.format(bc))
+ca = sqrt((x1 - x3) ** 2 + (y1 - y3) ** 2)
+print('Length of CA: {:.5g}'.format(ca))
 print('\n')
 
-if sideFirstLength <= sideSecondLength and sideFirstLength <= sideThirdLength:
-    sideTheSmallestLength = sideFirstLength
-elif sideSecondLength <= sideFirstLength and sideSecondLength <= sideThirdLength:
-    sideTheSmallestLength = sideSecondLength
+if ab <= bc and ab <= ca:
+    side = ab
+elif bc <= ab and bc <= ca:
+    side = bc
 else:
-    sideTheSmallestLength = sideThirdLength
-semiperimeter = (sideFirstLength + sideSecondLength + sideThirdLength) / 2
-heightFromTheSmallestAngle = 2 * sqrt(semiperimeter * (semiperimeter - sideFirstLength) * (semiperimeter - sideSecondLength) * (semiperimeter - sideThirdLength)) / sideTheSmallestLength
-print('Length of height from the smallest angle: {:.5g}'.format(heightFromTheSmallestAngle))
+    side = ca
+p = (ab + bc + ca) / 2
+height = 2 * sqrt(p * (p - ab) * (p - bc) * (p - ca)) / side
+print('Length of height from the smallest angle: {:.5g}'.format(height))
 print('\n')
 
-pointFourthX, pointFourthY = map(int, input('Input x and y for fourth point: ').split())
+x4, y4 = map(float, input('Input x and y for point D: ').split())
 print('\n')
-a = (pointFirstX - pointFourthX) * (pointSecondY - pointFirstY) - (pointSecondX - pointFirstX) * (pointFirstY - pointFourthY)
-b = (pointSecondX - pointFourthX) * (pointThirdY - pointSecondY) - (pointThirdX - pointSecondX) * (pointSecondY - pointFourthY)
-c = (pointThirdX - pointFourthX) * (pointFirstY - pointThirdY) - (pointFirstX - pointThirdX) * (pointThirdY - pointFourthY)
+
+a = (x1 - x4) * (y2 - y1) - (x2 - x1) * (y1 - y4)
+b = (x2 - x4) * (y3 - y2) - (x3 - x2) * (y2 - y4)
+c = (x3 - x4) * (y1 - y3) - (x1 - x3) * (y3 - y4)
 if (a >= 0 and b >= 0 and c >=0) or (a <= 0 and b <= 0 and c <= 0):
-    print('Point is inside triangle')
-    if sideFirstLength >= sideSecondLength and sideFirstLength >= sideThirdLength:
-        distanceFromPointToTheBiggestSide = fabs(((pointSecondX - pointFirstX) * (pointFourthY - pointFirstY) - (pointSecondY - pointFirstY) * (pointFourthX - pointFirstX)) / sqrt((pointSecondX - pointFirstX) ** 2 + (pointSecondY - pointFirstY) ** 2))
-    elif sideSecondLength >= sideFirstLength and sideSecondLength >= sideThirdLength:
-        distanceFromPointToTheBiggestSide = fabs(((pointThirdX - pointSecondX) * (pointFourthY - pointSecondY) - (pointThirdY - pointSecondY) * (pointFourthX - pointSecondX)) / sqrt((pointThirdX - pointSecondX) ** 2 + (pointThirdY - pointSecondY) ** 2))
+    print('Point D is inside triangle')
+    if ab >= bc and ab >= ca:
+        distance = fabs(((x2 - x1) * (y4 - y1) - (y2 - y1) * (x4 - x1)) / sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2))
+    elif bc >= ab and bc >= ca:
+        distance = fabs(((x3 - x2) * (y4 - y2) - (y3 - y2) * (x4 - x2)) / sqrt((x3 - x2) ** 2 + (y3 - y2) ** 2))
     else:
-        distanceFromPointToTheBiggestSide = fabs(((pointFirstX - pointThirdX) * (pointFourthY - pointThirdY) - (pointFirstY - pointThirdY) * (pointFourthX - pointThirdX)) / sqrt((pointFirstX - pointThirdX) ** 2 + (pointFirstY - pointThirdY) ** 2))
-    print('Distance from point to the biggest side: {:.5g}'.format(distanceFromPointToTheBiggestSide))
+        distance = fabs(((x1 - x3) * (y4 - y3) - (y1 - y3) * (x4 - x3)) / sqrt((x1 - x3) ** 2 + (y1 - y3) ** 2))
+    print('Distance from point D to the biggest side: {:.5g}'.format(distance))
 else:
-    print('Point is not inside triangle')
+    print('Point D is not inside triangle')
 print('\n')
 
-if sideFirstLength == sideSecondLength or sideFirstLength == sideThirdLength or sideSecondLength == sideThirdLength:
-    print('Triangle is isosceles')
+if ab == bc or ab == ca or bc == ca:
+    print('Triangle ABC is isosceles')
 else:
-    print('Triangle is not isosceles')
+    print('Triangle ABC is not isosceles')
