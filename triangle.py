@@ -1,8 +1,14 @@
+#Немушкин Юрий ИУ7-14Б
+
 from math import sqrt, fabs
 
-pointFirstX, pointFirstY = map(int, input('Input x and y for first point: ').split())
-pointSecondX, pointSecondY = map(int, input('Input x and y for second point: ').split())
-pointThirdX, pointThirdY = map(int, input('Input x and y for third point: ').split())
+x1, y1 = map(float, input('Input x and y for first point: ').split())
+x2, y2 = map(float, input('Input x and y for second point: ').split())
+x3, y3 = map(float, input('Input x and y for third point: ').split())
+if (x1 - x3) * (y2 - y3) - (x2 - x3) * (y1 - y3) == 0:
+    print('Uncorrect coordinats')
+else:
+    print('')
 print('\n')
 
 sideFirstLength = sqrt((pointSecondX - pointFirstX) ** 2 + (pointSecondY - pointFirstY) ** 2)

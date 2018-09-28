@@ -1,3 +1,6 @@
+#Немушкин Юрий ИУ7-14Б
+#Попытка написать triangle с помощью ООП
+
 from math import sqrt, fabs
 
 class Point():
