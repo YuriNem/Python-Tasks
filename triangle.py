@@ -1,90 +1,48 @@
-from math import sqrt
+from math import sqrt, fabs
 
-class Point():
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
+pointFirstX, pointFirstY = map(int, input('Input x and y for first point: ').split())
+pointSecondX, pointSecondY = map(int, input('Input x and y for second point: ').split())
+pointThirdX, pointThirdY = map(int, input('Input x and y for third point: ').split())
+print('\n')
 
-class Side():
-    def __init__(self, pointFirst, pointSecond):
-        self.pointFirst = pointFirst
-        self.pointSecond = pointSecond
+sideFirstLength = sqrt((pointSecondX - pointFirstX) ** 2 + (pointSecondY - pointFirstY) ** 2)
+print('Length of first side: {:.5g}'.format(sideFirstLength))
+sideSecondLength = sqrt((pointThirdX - pointSecondX) ** 2 + (pointThirdY - pointSecondY) ** 2)
+print('Length of second side: {:.5g}'.format(sideSecondLength))
+sideThirdLength = sqrt((pointFirstX - pointThirdX) ** 2 + (pointFirstY - pointThirdY) ** 2)
+print('Length of third side: {:.5g}'.format(sideThirdLength))
+print('\n')
 
-    def getLength(self):
-        return sqrt((self.pointSecond.x - self.pointFirst.x) ** 2 + (self.pointSecond.y - self.pointFirst.y) ** 2)
+if sideFirstLength <= sideSecondLength and sideFirstLength <= sideThirdLength:
+    sideTheSmallestLength = sideFirstLength
+elif sideSecondLength <= sideFirstLength and sideSecondLength <= sideThirdLength:
+    sideTheSmallestLength = sideSecondLength
+else:
+    sideTheSmallestLength = sideThirdLength
+semiperimeter = (sideFirstLength + sideSecondLength + sideThirdLength) / 2
+heightFromTheSmallestAngle = 2 * sqrt(semiperimeter * (semiperimeter - sideFirstLength) * (semiperimeter - sideSecondLength) * (semiperimeter - sideThirdLength)) / sideTheSmallestLength
+print('Length of height from the smallest angle: {:.5g}'.format(heightFromTheSmallestAngle))
+print('\n')
 
-class Triangle():
-    def __init__(self, sideFirst, sideSecond, sideThird):
-        self.sideFirst = sideFirst
-        self.sideSecond = sideSecond
-        self.sideThird = sideThird
+pointFourthX, pointFourthY = map(int, input('Input x and y for fourth point: ').split())
+print('\n')
+a = (pointFirstX - pointFourthX) * (pointSecondY - pointFirstY) - (pointSecondX - pointFirstX) * (pointFirstY - pointFourthY)
+b = (pointSecondX - pointFourthX) * (pointThirdY - pointSecondY) - (pointThirdX - pointSecondX) * (pointSecondY - pointFourthY)
+c = (pointThirdX - pointFourthX) * (pointFirstY - pointThirdY) - (pointFirstX - pointThirdX) * (pointThirdY - pointFourthY)
+if (a >= 0 and b >= 0 and c >=0) or (a <= 0 and b <= 0 and c <= 0):
+    print('Point is inside triangle')
+    if sideFirstLength >= sideSecondLength and sideFirstLength >= sideThirdLength:
+        distanceFromPointToTheBiggestSide = fabs(((pointSecondX - pointFirstX) * (pointFourthY - pointFirstY) - (pointSecondY - pointFirstY) * (pointFourthX - pointFirstX)) / sqrt((pointSecondX - pointFirstX) ** 2 + (pointSecondY - pointFirstY) ** 2))
+    elif sideSecondLength >= sideFirstLength and sideSecondLength >= sideThirdLength:
+        distanceFromPointToTheBiggestSide = fabs(((pointThirdX - pointSecondX) * (pointFourthY - pointSecondY) - (pointThirdY - pointSecondY) * (pointFourthX - pointSecondX)) / sqrt((pointThirdX - pointSecondX) ** 2 + (pointThirdY - pointSecondY) ** 2))
+    else:
+        distanceFromPointToTheBiggestSide = fabs(((pointFirstX - pointThirdX) * (pointFourthY - pointThirdY) - (pointFirstY - pointThirdY) * (pointFourthX - pointThirdX)) / sqrt((pointFirstX - pointThirdX) ** 2 + (pointFirstY - pointThirdY) ** 2))
+    print('Distance from point to the biggest side: {:.5g}'.format(distanceFromPointToTheBiggestSide))
+else:
+    print('Point is not inside triangle')
+print('\n')
 
-    def getHeightFromTheSmallestAngle(self):
-        def getTheSmallestSide(sideFirst, sideSecond, sideThird):
-            if sideFirst.getLength() <= sideSecond.getLength():
-                if sideFirst.getLength() <= sideSecond.getLength():
-                    return sideFirst
-                else:
-                    return sideThird
-            else:
-                if sideSecond.getLength() <= sideThird.getLength():
-                    return sideSecond
-                else:
-                    return sideThird
-        
-        sideFirstLength = self.sideFirst.getLength()
-        sideSecondLength = self.sideSecond.getLength()
-        sideThirdLength = self.sideThird.getLength()
-        semiperimeter = (sideFirstLength + sideSecondLength + sideThirdLength) / 2
-        sideTheSmallest = getTheSmallestSide(self.sideFirst, self.sideSecond, self.sideThird)
-        return 2 * sqrt(semiperimeter * (semiperimeter - sideFirstLength) * (semiperimeter - sideSecondLength) * (semiperimeter - sideThirdLength)) / sideTheSmallest.getLength()
-
-    def isPointInside(self, point):
-        pointFirstX = self.sideFirst.pointFirst.x
-        pointFirstY = self.sideFirst.pointFirst.y
-        pointSecondX = self.sideSecond.pointFirst.x
-        pointSecondY = self.sideSecond.pointFirst.y
-        pointThirdX = self.sideThird.pointFirst.x
-        pointThirdY = self.sideThird.pointFirst.y
-        a = (pointFirstX - point.x) * (pointSecondY - pointFirstY) - (pointSecondX - pointFirstX) * (pointFirstY - point.y)
-        b = (pointSecondX - point.x) * (pointThirdY - pointSecondY) - (pointThirdX - pointSecondX) * (pointSecondY - point.y)
-        c = (pointThirdX - point.x) * (pointFirstY - pointThirdY) - (pointFirstX - pointThirdX) * (pointThirdY - point.y)
-        return (a >= 0 and b >= 0 and c >=0) or (a <= 0 and b <= 0 and c <= 0)
-
-    def getDistanceFromPointToTheBiggestSide(self, point):
-        def getTheBiggestSide(sideFirst, sideSecond, sideThird):
-            if sideFirst.getLength() >= sideSecond.getLength():
-                if sideFirst.getLength() >= sideSecond.getLength():
-                    return sideFirst
-                else:
-                    return sideThird
-            else:
-                if sideSecond.getLength() >= sideThird.getLength():
-                    return sideSecond
-                else:
-                    return sideThird
-        
-        if self.isPointInside(point):
-            sideTheBigget = getTheBiggestSide(self.sideFirst, self.sideSecond, self.sideThird)
-            return sideTheBigget
-        else:
-            return self.isPointInside(point)
-
-    def isIsosceles(self):
-        sideFirstLength = self.sideFirst.getLength()
-        sideSecondLength = self.sideSecond.getLength()
-        sideThirdLength = self.sideThird.getLength()
-        return sideFirstLength == sideSecondLength or sideFirstLength == sideThirdLength or sideSecondLength == sideThirdLength
-
-point1 = Point(1, 1)
-point2 = Point(2, 3)
-point3 = Point(3, 1)
-
-side12 = Side(point1, point2)
-side23 = Side(point2, point3)
-side31 = Side(point3, point1)
-print(side12.getLength(), side23.getLength(), side31.getLength())
-
-triangle123 = Triangle(side12, side23, side31)
-pointTest = Point(2, 2)
-print(triangle123.getHeightFromTheSmallestAngle(), triangle123.isPointInside(pointTest), triangle123.getDistanceFromPointToTheBiggestSide(pointTest), triangle123.isIsosceles())
+if sideFirstLength == sideSecondLength or sideFirstLength == sideThirdLength or sideSecondLength == sideThirdLength:
+    print('Triangle is isosceles')
+else:
+    print('Triangle is not isosceles')
